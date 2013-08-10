@@ -1,0 +1,6 @@
+[submodule "src/list-view"]
+	path = src/list-view
+	url = https://github.com/emberjs/list-view.git
+[submodule "src/bootstrap"]
+	path = src/bootstrap
+	url = https://github.com/emberjs/bootstrap.git
