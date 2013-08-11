@@ -3,8 +3,6 @@
   "version": "0.1.0",
   "dependencies": {
     "forever": "latest",
-    "deployd": "0.6.10",
-    "dpd-event": "latest",
     "http-proxy": "latest",
     "colors": "latest"
   },
@@ -35,6 +33,9 @@
     "grunt-neuter": "0.5.0",
     "matchdep": "~0.1.1",
     "bower": "~1.1.0",
+    "argo": "~0.2.1",
+    "echonest": "~0.0.3",
+    "superagent": "~0.15.4"
   },
   "engines": {
     "node": ">= 0.10.0",

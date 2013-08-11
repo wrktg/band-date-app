@@ -1,4 +1,4 @@
-FS.DOM = Ember.Namespace.create({
+App.DOM = Ember.Namespace.create({
   window: null
 });
 
@@ -6,7 +6,7 @@ FS.DOM = Ember.Namespace.create({
  * Wrapper for DOM's window object allows to use Ember events when hooking the DOM
  * @type {Object.extend|*}
  */
-FS.DOM.Window = Ember.Object.extend( Ember.Evented, {
+App.DOM.Window = Ember.Object.extend( Ember.Evented, {
   resizeTimer: null,
   init: function() {
     this._super();
@@ -23,13 +23,13 @@ FS.DOM.Window = Ember.Object.extend( Ember.Evented, {
 });
 
 
-FS.DOM.Element = Ember.Object.extend( Ember.Evented, {
+App.DOM.Element = Ember.Object.extend( Ember.Evented, {
   el:       null,
   width:    null,
   height:   null,
   init: function() {
     this._super();
-    FS.DOM.window.on( 'resize', this, 'resized' );
+    App.DOM.window.on( 'resize', this, 'resized' );
   },
   /**
    * Update width & height properties and fire resize event
@@ -72,5 +72,5 @@ FS.DOM.Element = Ember.Object.extend( Ember.Evented, {
  * Triggers resize event if this views element is resized
  * @type {Object.extend|*}
  */
-FS.DOM.ResizableElement = Ember.Mixin.create( FS.DOM.Element, {} );
-FS.DOM.window = FS.DOM.Window.create({});
+App.DOM.ResizableElement = Ember.Mixin.create( App.DOM.Element, {} );
+App.DOM.window = App.DOM.Window.create({});
