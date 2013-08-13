@@ -1,6 +1,7 @@
 // Generated on 2013-07-13 using generator-ember 0.4.0
 'use strict';
 var lrSnippet     = require( 'grunt-contrib-livereload/lib/utils' ).livereloadSnippet;
+var proxySnippet  = require('grunt-connect-proxy/lib/utils').proxyRequest;
 var mountFolder = function ( connect, dir ) {
   return connect.static( require( 'path' ).resolve( dir ) );
 };
@@ -23,6 +24,7 @@ module.exports = function ( grunt ) {
   };
 
   grunt.initConfig( {
+    pkg: grunt.file.readJSON( 'package.json' ),
     yeoman : yeomanConfig,
     watch : {
       emberTemplates : {
@@ -62,13 +64,26 @@ module.exports = function ( grunt ) {
         // change this to '0.0.0.0' to access the server from outside
         hostname : 'localhost'
       },
+      proxies: [
+        {
+          context: '/api',
+          host: "<%= pkg.apps.development.ip %>",
+          port: "<%= pkg.apps.development.port %>",
+          https: false,
+          changeOrigin: false,
+          rewrite: {
+            '^/api': '' // rewrite the url because the api doesn't have prefix
+          }
+        }
+      ],
       livereload : {
         options : {
           middleware : function ( connect ) {
             return [
               lrSnippet,
               mountFolder( connect, '.tmp' ),
-              mountFolder( connect, 'app' )
+              mountFolder( connect, 'app' ),
+              proxySnippet
             ];
           }
         }
@@ -78,7 +93,8 @@ module.exports = function ( grunt ) {
           middleware : function ( connect ) {
             return [
               mountFolder( connect, '.tmp' ),
-              mountFolder( connect, 'test' )
+              mountFolder( connect, 'test' ),
+              proxySnippet
             ];
           }
         }
@@ -87,7 +103,8 @@ module.exports = function ( grunt ) {
         options : {
           middleware : function ( connect ) {
             return [
-              mountFolder( connect, 'dist' )
+              mountFolder( connect, 'dist' ),
+              proxySnippet
             ];
           }
         }
@@ -296,8 +313,9 @@ module.exports = function ( grunt ) {
     grunt.config.set( 'yeoman.build', val );
   });
 
-  grunt.registerTask( 'deployd', 'Run deployd server', function(){
-    require('main');
+  grunt.registerTask('start-api-server', 'Start api server', function() {
+    grunt.log.writeln( 'Starting API server on ' + grunt.config( 'pkg.apps.development.domain' ) + ':' + grunt.config( 'pkg.apps.development.port') );
+    require('./main');
   });
 
   grunt.registerTask( 'server', function ( target ) {
@@ -311,6 +329,7 @@ module.exports = function ( grunt ) {
       'neuter:config',
       'neuter:app',
       'configureProxies',
+      'start-api-server',
       'connect:livereload',
       'open',
       'watch'

@@ -1,3 +1,7 @@
 #!/usr/bin/env node
 
-require( './lib/server' ).run();
+var
+  pkg = require('./package.json' ),
+  env = process.env.ENV || 'development';
+
+require( './lib/server' ).run( pkg[ "apps" ][ env ] );

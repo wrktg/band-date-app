@@ -4,7 +4,7 @@
   "dependencies": {
     "forever": "latest",
     "http-proxy": "latest",
-    "colors": "latest"
+    "colors": "~0.6.0"
   },
   "devDependencies": {
     "grunt": "~0.4.1",
@@ -31,6 +31,7 @@
     "grunt-concurrent": "0.3.0",
     "grunt-ember-templates": "0.4.7",
     "grunt-neuter": "0.5.0",
+    "grunt-forever": "0.4.1",
     "matchdep": "~0.1.1",
     "bower": "~1.1.0",
     "argo": "~0.2.1",
@@ -42,5 +43,17 @@
     "npm": ">= 1.0.0"
   },
   "private": true,
-  "main": "./main"
+  "main": "./main",
+  "apps": {
+    "development": {
+      "domain": "localhost",
+      "port": 7787,
+      "ip": "127.0.0.1"
+    },
+    "production": {
+      "domain": "gigpage.ca",
+      "port": 7787,
+      "ip": "198.206.133.147"
+    }
+  }
 }
